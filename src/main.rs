@@ -12,6 +12,7 @@ use std::{
 };
 
 use clap::{Args, Parser, Subcommand};
+use clap_num::maybe_hex;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -70,25 +71,26 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Read MSR
+    /// Read a MSR
     Rdmsr(RdmsrArgs),
+    /// Read a range of MSRs
     RdmsrRange(RdmsrRangeArgs),
 }
 
 #[derive(Args)]
 struct RdmsrArgs {
     /// MSR address
-    #[arg(required = true)]
+    #[arg(required = true, value_parser=maybe_hex::<u64>)]
     addr: u64,
 }
 
 #[derive(Args)]
 struct RdmsrRangeArgs {
     /// MSR start address
-    #[arg(required = true)]
+    #[arg(required = true, value_parser=maybe_hex::<u64>)]
     addr_start: u64,
     /// MSR end address
-    #[arg(required = true)]
+    #[arg(required = true, value_parser=maybe_hex::<u64>)]
     addr_end: u64,
 }
 
