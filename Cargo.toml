@@ -1,5 +1,5 @@
 [package]
-name = "x86-msr-explorer"
+name = "msr-explorer"
 version = "0.1.0"
 edition = "2021"
 
